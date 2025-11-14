@@ -144,9 +144,9 @@ UI فقط نمایش‌دهنده‌ی رویدادهاست. فرمت لاگ د�
     "kind": "deathrattle_trigger",
     "source": {"player_id": "p2", "slot": 1, "instance_id": "inst-500"},
     "summons": [
-      {"player_id": "p2", "card_id": "BG_TOKEN_SCARAB_22", "attack": 2, "health": 2, "slot": null}
+      {"player_id": "p2", "card_id": "BG_TOKEN_BEETLE_11", "attack": 1, "health": 1, "slot": null}
     ],
-    "log": "Buzzing Vermin summons a 2/2 Scarab."
+    "log": "Buzzing Vermin summons a 1/1 Beetle."
   }
 }
 ```
@@ -228,46 +228,38 @@ common/
 ##  لیست ۱۸ مینیون فاز (به تفکیک قبیله)
 > همه‌ی تصاویر از `../bgknowhow-main/images/minions/` لود می‌شوند و باید در manifest هم ثبت شوند.
 
-### Beetle / Beast Core
+### گروه سوسک‌ها (Beetle Build)
 
-| کارت | نقش | تصویر |
-| --- | --- | --- |
-| **Buzzing Vermin** | Taunt + Deathrattle: Scarab 2/2 با Taunt | <img src="../bgknowhow-main/images/minions/BG31_803_render_80.webp" alt="Buzzing Vermin" width="130"> |
-| **Forest Rover** | Battlecry: همه Beetleها +2/+1 / Deathrattle: Scarab 2/2 | <img src="../bgknowhow-main/images/minions/BG31_801_render_80.webp" alt="Forest Rover" width="130"> |
-| **Sprightly Scarab** | Choose One: (+2/+2 & Reborn) یا (+5Atk & Windfury) | <img src="../bgknowhow-main/images/minions/BG27_084_render_80.webp" alt="Sprightly Scarab" width="130"> |
-| **Turquoise Skitterer** | Deathrattle: همه Beetleها +1/+2 و Scarab 2/2 | <img src="../bgknowhow-main/images/minions/BG31_809_render_80.webp" alt="Turquoise Skitterer" width="130"> |
-| **Nest Swarmer** | Deathrattle: سه Scarab 2/2 | <img src="../bgknowhow-main/images/minions/BG31_807_render_80.webp" alt="Nest Swarmer" width="130"> |
-| **Monstrous Macaw** | بعد از Attack: اولین Deathrattle سمت چپ را فعال کن | <img src="../bgknowhow-main/images/minions/BGS_078_render_80.webp" alt="Monstrous Macaw" width="130"> |
+| کارت | نقش (توضیحات اصلاح شده و واقعی) | تصویر |
+| :--- | :--- | :--- |
+| **Buzzing Vermin** | **Taunt**، **Deathrattle:** یک **Beetle** 1/1 احضار کن. | <img src="../bgknowhow-main/images/minions/BG31_803_render_80.webp" alt="Buzzing Vermin" width="130"> |
+| **Forest Rover** | **Battlecry:** تمام **Beetle**های شما در این بازی +1/+1 می‌گیرند. **Deathrattle:** یک **Beetle** 1/1 احضار کن. | <img src="../bgknowhow-main/images/minions/BG31_801_render_80.webp" alt="Forest Rover" width="130"> |
+| **Sprightly Scarab** | **Battlecry: Choose One -** به یک Beast +1/+1 و **Reborn** بده؛ یا +4 Attack و **Windfury** بده. | <img src="../bgknowhow-main/images/minions/BG27_084_render_80.webp" alt="Sprightly Scarab" width="130"> |
+| **Turquoise Skitterer** | **Deathrattle:** تمام **Beetle**های شما در این بازی +1/+2 می‌گیرند. یک **Beetle** 1/1 احضار کن. | <img src="../bgknowhow-main/images/minions/BG31_809_render_80.webp" alt="Turquoise Skitterer" width="130"> |
+| **Nest Swarmer** | **Deathrattle:** سه **Beetle** 1/1 احضار کن. | <img src="../bgknowhow-main/images/minions/BG31_807_render_80.webp" alt="Nest Swarmer" width="130"> |
+| **Monstrous Macaw** | بعد از اینکه این مینیون Attack می‌دهد، افکت **Deathrattle** چپ‌ترین مینیون شما فعال می‌شود. | <img src="../bgknowhow-main/images/minions/BGS_078_render_80.webp" alt="Monstrous Macaw" width="130"> |
 
-### Demon Loop
+### گروه دیمن‌ها (Demon Loop)
 
-| کارت | نقش | تصویر |
-| --- | --- | --- |
-| **Wrath Weaver** | هر Demon: +2/+2 بگیر، 1 دمیج به هیرو | <img src="../bgknowhow-main/images/minions/BGS_004_render_80.webp" alt="Wrath Weaver" width="130"> |
-| **Imp Mama** | Taunt + Deathrattle: یک Demon تصادفی با Taunt | <img src="../bgknowhow-main/images/minions/BGS_044_render_80.webp" alt="Imp Mama" width="130"> |
-| **False Implicator** | End of Turn: یک کارت Tavern را Consume کن | <img src="../bgknowhow-main/images/minions/BG29_140_render_80.webp" alt="False Implicator" width="130"> |
-| **Furious Driver** | Battlecry: هر Demon دیگر یک کارت Tavern می‌خورد | <img src="../bgknowhow-main/images/minions/BG31_874_render_80.webp" alt="Furious Driver" width="130"> |
-| **Famished Felbat** | End of Turn: همه Demonها کارت‌های Shop را Consume می‌کنند | <img src="../bgknowhow-main/images/minions/BG21_005_render_80.webp" alt="Famished Felbat" width="130"> |
-| **Consume Tokens** | برای تست انیمیشن گروهی استفاده کنید | <img src="../bgknowhow-main/images/minions/BG31_874_render_80.webp" alt="Consume Tokens" width="130"> |
+| کارت | نقش (توضیحات واقعی) | تصویر |
+| :--- | :--- | :--- |
+| **Wrath Weaver** | بعد از اینکه یک **Demon** بازی می‌کنید، +2/+2 می‌گیرد و 1 دمیج به هیروی شما وارد می‌شود. | <img src="../bgknowhow-main/images/minions/BGS_004_render_80.webp" alt="Wrath Weaver" width="130"> |
+| **Imp Mama** | **Taunt**، **Deathrattle:** یک **Demon** تصادفی احضار کن و به آن **Taunt** بده. | <img src="../bgknowhow-main/images/minions/BGS_044_render_80.webp" alt="Imp Mama" width="130"> |
+| **False Implicator** | در پایان نوبت شما، یک مینیون از Tavern را **Consume** (مصرف) می‌کند تا آمار آن را به دست آورد. | <img src="../bgknowhow-main/images/minions/BG29_140_render_80.webp" alt="False Implicator" width="130"> |
+| **Furious Driver** | **Battlecry:** هر کدام از **Demon**های دیگر شما، یک مینیون از Tavern را **Consume** می‌کنند تا آمار آن را به دست آورند. | <img src="../bgknowhow-main/images/minions/BG31_874_render_80.webp" alt="Furious Driver" width="130"> |
+| **Famished Felbat** | در پایان نوبت شما، همه‌ی **Demon**های شما هر کدام یک مینیون از Tavern را **Consume** می‌کنند تا *دو برابر* آمار آن را به دست آورند. | <img src="../bgknowhow-main/images/minions/BG21_005_render_80.webp" alt="Famished Felbat" width="130"> |
 
-### Undead Chain
+### گروه آنددها (Undead Chain)
 
-| کارت | نقش | تصویر |
-| --- | --- | --- |
-| **Harmless Bonehead** | Deathrattle: دو Skeleton 1/1 | <img src="../bgknowhow-main/images/minions/BG28_300_render_80.webp" alt="Harmless Bonehead" width="130"> |
-| **Handless Forsaken** | Deathrattle: Hand 2/1 با Reborn | <img src="../bgknowhow-main/images/minions/BG25_010_render_80.webp" alt="Handless Forsaken" width="130"> |
-| **Nerubian Deathswarmer** | Battlecry: تمام Undeadها +1 Attack دائمی | <img src="../bgknowhow-main/images/minions/BG25_011_render_80.webp" alt="Nerubian Deathswarmer" width="130"> |
-| **Eternal Knight** | برای هر Knight مرده: +1/+1 دائمی | <img src="../bgknowhow-main/images/minions/BG25_008_render_80.webp" alt="Eternal Knight" width="130"> |
-| **Eternal Summoner** | Reborn + Deathrattle: دو Eternal Knight (یکی طلایی در نسخه گلدن) | <img src="../bgknowhow-main/images/minions/BG25_009_render_80.webp" alt="Eternal Summoner" width="130"> |
-| **Catacomb Crasher** | Battlecry: به یک متحد Deathrattle «Summon 1/1 Skeleton» بده | <img src="../bgknowhow-main/images/minions/BG30_129_render_80.webp" alt="Catacomb Crasher" width="130"> |
-| **Titus Rivendare** | Aura: Deathrattleها دوبار اجرا می‌شوند | <img src="../bgknowhow-main/images/minions/BG25_354_render_80.webp" alt="Titus Rivendare" width="130"> |
-
-### Legendary Support / Utility
-
-| کارت | نقش | تصویر |
-| --- | --- | --- |
-| **Imp Mama (Taunt Summoner)** | نقش Tank + RNG Summon برای سناریوهای تست | <img src="../bgknowhow-main/images/minions/BGS_044_render_80.webp" alt="Imp Mama Support" width="130"> |
-| **Armless Combo Hand** | ترکیب Handless و Bonehead برای تست Reborn Chain | <img src="../bgknowhow-main/images/minions/BG25_010_render_80.webp" alt="Armless Combo" width="130"> |
+| کارت | نقش (توضیحات اصلاح شده و واقعی) | تصویر |
+| :--- | :--- | :--- |
+| **Harmless Bonehead** | **Deathrattle:** دو Skeleton 1/1 احضار کن. | <img src="../bgknowhow-main/images/minions/BG28_300_render_80.webp" alt="Harmless Bonehead" width="130"> |
+| **Handless Forsaken** | **Deathrattle:** یک Hand 2/1 با **Reborn** احضار کن. | <img src="../bgknowhow-main/images/minions/BG25_010_render_80.webp" alt="Handless Forsaken" width="130"> |
+| **Nerubian Deathswarmer** | **Battlecry:** تمام **Undead**های شما در این بازی (در همه‌جا) +1 Attack می‌گیرند. | <img src="../bgknowhow-main/images/minions/BG25_011_render_80.webp" alt="Nerubian Deathswarmer" width="130"> |
+| **Eternal Knight** | **Start of Combat:** به ازای هر **Eternal Knight** خودی که در این بازی مرده است، +1/+1 می‌گیرد. | <img src="../bgknowhow-main/images/minions/BG25_008_render_80.webp" alt="Eternal Knight" width="130"> |
+| **Eternal Summoner** | **Reborn**، **Deathrattle:** دو **Eternal Knight** احضار کن. | <img src="../bgknowhow-main/images/minions/BG25_009_render_80.webp" alt="Eternal Summoner" width="130"> |
+| **Catacomb Crasher** | هرزمان که قرار است مینیونی احضار کنید اما صفحه شما پر است، مینیون‌های شما +1/+1 دائمی می‌گیرند. | <img src="../bgknowhow-main/images/minions/BG30_129_render_80.webp" alt="Catacomb Crasher" width="130"> |
+| **Titus Rivendare** | **Aura:** افکت‌های **Deathrattle** شما دو بار فعال می‌شوند. | <img src="../bgknowhow-main/images/minions/BG25_354_render_80.webp" alt="Titus Rivendare" width="130"> |
 
 ##  نکات ریز ولی ضروری
 - Sylvanas فقط هیرو است؛ اگر جایی لازم شد کارتی به همین نام بود، نادیده بگیرید.  
