@@ -78,7 +78,7 @@ git checkout -b student-name
 
 | نام تیم | برنچ تیمی | اعضا (شماره دانشجویی) | لینک فایل تیم |
 |---------|-----------|------------------------|---------------|
-| مثال | `team/example` | 401234567، 401234568 | [teams/example.md](./teams/example.md) |
+| stunners | `team/stunners` | 610303180 , 610303181, 610303124 | [teams/TEAM_STUNNERS.md](./teams/TEAM_STUNNERS.md) |
 <!-- ردیف تیم خودتون رو اینجا اضافه کنید -->
 
 ## لینک‌های مفید
