@@ -1,15 +1,16 @@
 # Team Info Form
 
 Copy this file and save it in this folder with your team name. Example: `teams/phoenix.md`
+| scaredfromcompile | `team/scaredfromcompile` | 610303107، 610004028، 610303109 | teams/scaredfromcompile.md |
 
 ## Basic Info
 
-- Team name:
-- Branch name: `team/<team-name>`
+- Team name: Scared from Compile
+- Branch name: `team/<scaredfromcompile>`
 - Members:
-  - Member 1 — Student ID
-  - Member 2 — Student ID
-  - Member 3 — Student ID
+  - Parnian Asghari — 610303107
+  - Asal Rastgar — 610004028
+  - Maryam Aghali — 610303109
 
 ## Notes (Optional)
 
