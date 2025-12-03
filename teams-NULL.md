@@ -14,7 +14,7 @@ This file contain's a summary profile of our team "NULL". This team was created 
 ## Notes (Optional)
 
 - Each member's domain:
-  - AmirMohammad Khakbaz  : N.A
+  - AmirMohammad Khakbaz  : https://github.com/AMKhakbaz
   - Reza Fayazi           : https://github.com/Reter0
   - Seyed Hadi Mousavi    : https://github.com/saayedh
 
@@ -31,3 +31,4 @@ This file contain's a summary profile of our team "NULL". This team was created 
 - [ ] Core implementation
 - [ ] Tests
 - [ ] Documentation
+
