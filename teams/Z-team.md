@@ -9,7 +9,7 @@ Copy this file and save it in this folder with your team name. Example: `teams/p
 - Members:
   - Alireza Jorati — 610003023
   - Parmis Amirian — Student ID
-  - Zahra Javidi — Student ID
+  - Zahra Javidi — 610003001
 
 ## Notes (Optional)
 
