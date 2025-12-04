@@ -1,3 +1,9 @@
 # Ignore specs documentation drafts
 docs/specs/
-
+statusvenv/
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+.env
+*.log

@@ -998,17 +998,9 @@ git pull team-fork team/robert  # یا git pull origin team/robert اگر سرگ
 
 | نام تیم | برنچ تیمی | اعضا (شماره دانشجویی) | لینک فایل تیم |
 |---------|-----------|------------------------|---------------|
-<<<<<<< HEAD
 | مثال | `team/example` | 401234567، 401234568 | [teams/example.md](./teams/example.md) |
 | traveler | `travelers` | 610303211, 610303143, 610303101
 | [teams/traveler.md](./teams/traveler.md) |
-=======
-| مثال | `team/example` | 610334567، 610334568 | teams/example.md |
-<!-- ردیف تیم خودتون رو اینجا اضافه کنید -->
-
----
-
->>>>>>> main
 ## لینک‌های مفید
 
 - [مستندات Game Client](./docs/GameClient.md) - حتماً بخونید!
