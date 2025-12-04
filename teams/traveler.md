@@ -1,4 +1,4 @@
-## Basic Info...
+## Basic Info
 
 - Team name: Traveler
 - Branch name: `team/traveler`
