@@ -999,6 +999,7 @@ git pull team-fork team/robert  # یا git pull origin team/robert اگر سرگ
 | نام تیم | برنچ تیمی | اعضا (شماره دانشجویی) | لینک فایل تیم |
 |---------|-----------|------------------------|---------------|
 | مثال | `team/example` | 610334567، 610334568 | teams/example.md |
+| TheGoodTeam | `team/TheGoodTeam` | 493210121، 610402206, 4032140135 | teams/TheGoodTeam.md |
 <!-- ردیف تیم خودتون رو اینجا اضافه کنید -->
 
 ---
