@@ -1,5 +1,10 @@
+# Mock Payloads & Schema Definitions
+
+این فایل شامل تمام **Payload**های **JSON** مورد نیاز برای شبیه‌سازی وضعیت‌های مختلف کلاینت (**Recruit**, **Combat**, **Errors**) و تست آفلاین می‌باشد.
+
 ## 1. `data/mock_state.json`
-Single Recruit snapshot: shop, board, hand, timers, flags.
+
+**Snapshot کامل وضعیت Recruit**: شامل فروشگاه، برد، دست، تایمرها و فلگ‌ها.
 
 ```json
 {
@@ -46,10 +51,9 @@ Single Recruit snapshot: shop, board, hand, timers, flags.
 }
 ```
 
----
-
 ## 2. Recruit Phase Deltas (`state_delta_01.json`, `state_delta_02.json`)
-Apply server events without reloading (`events[]` matches the real backend).
+
+اعمال تغییرات سمت سرور بدون ریلود کامل (ساختار `events[]` مطابق با بک‌اند واقعی).
 
 ```json
 {
@@ -72,12 +76,11 @@ Apply server events without reloading (`events[]` matches the real backend).
 }
 ```
 
-Use the same shape for `board_update`, `board_remove`, `freeze_state`, `hero_health`, `armor`, etc.
-
----
+> **نکته:** از همین ساختار برای عملیات `board_update`, `board_remove`, `freeze_state`, `hero_health`, `armor` و غیره استفاده می‌شود.
 
 ## 3. `combat_start.json`
-Initial combat payload (boards + seed + first attacker).
+
+اولین پیلود نبرد (شامل بردهای نهایی، **Seed** تصادفی و مشخص کردن شروع‌کننده).
 
 ```json
 {
@@ -98,12 +101,12 @@ Initial combat payload (boards + seed + first attacker).
 }
 ```
 
----
-
 ## 4. Combat Events (`combat_event_attack.json`, `combat_event_deathrattle.json`)
-Standard shape (`type=combat_event`, `payload.kind=...`).
 
-**Attack start**
+فرمت استاندارد انیمیشن‌ها (`type=combat_event`, `payload.kind=...`).
+
+### Attack start
+
 ```json
 {
   "type": "combat_event",
@@ -117,7 +120,8 @@ Standard shape (`type=combat_event`, `payload.kind=...`).
 }
 ```
 
-**Deathrattle + Summon**
+### Deathrattle + Summon
+
 ```json
 {
   "type": "combat_event",
@@ -134,12 +138,11 @@ Standard shape (`type=combat_event`, `payload.kind=...`).
 }
 ```
 
-Need another event? invent a new `payload.kind` (e.g. `stat_change`) with the data your animation needs.
-
----
+> **نکته:** نیاز به ایونت دیگری دارید؟ یک `payload.kind` جدید بسازید (مثلاً `stat_change`) با داده‌هایی که انیمیشن شما نیاز دارد.
 
 ## 5. `combat_result.json`
-Hero damage + survivors. Show the result screen after logging it.
+
+محاسبه دمیج هیرو و بازماندگان. نمایش صفحه نتیجه پس از لاگ کردن ایونت‌ها.
 
 ```json
 {
@@ -157,12 +160,12 @@ Hero damage + survivors. Show the result screen after logging it.
 }
 ```
 
----
-
 ## 6. Discover & Choose-One
-Discover offer/choice plus `choose_one` resolution.
 
-**`discover_offer.json`**
+مکانیزم‌های انتخاب کارت (**Discover**) و افکت‌های انتخابی (**Choose One**).
+
+### `discover_offer.json`
+
 ```json
 {
   "type": "discover_offer",
@@ -177,12 +180,23 @@ Discover offer/choice plus `choose_one` resolution.
 }
 ```
 
-**`discover_choice.json`**
+### `discover_choice.json` (فرمانی که کلاینت می‌فرستد)
+
+**نکته مهم:** این درخواست برای امنیت بیشتر به‌روزرسانی شد (استفاده از token به جای player_id).
+
 ```json
-{"cmd": "discover_choice", "player_id": "p1", "request_id": "uuid-456", "arguments": {"card_id": "BG_FRONT_013"}}
+{
+  "action": "DISCOVER_CHOICE",
+  "token": "user-uuid-1234",
+  "payload": {
+    "request_id": "uuid-456",
+    "card_id": "BG_FRONT_013"
+  }
+}
 ```
 
-**`choose_one_resolve.json`** (Sprightly Scarab)
+### `choose_one_resolve.json` (نتیجه انتخاب - مثال Sprightly Scarab)
+
 ```json
 {
   "type": "state_delta",
@@ -198,12 +212,12 @@ Discover offer/choice plus `choose_one` resolution.
 }
 ```
 
----
-
 ## 7. Error & Session Samples
-Give the log panel something to show.
 
-**`error.json`**
+نمونه‌ها برای نمایش در پنل لاگ یا **Toast** ارورها.
+
+### `error.json`
+
 ```json
 {
   "type": "error",
@@ -214,7 +228,8 @@ Give the log panel something to show.
 }
 ```
 
-**`session_closed.json`**
+### `session_closed.json`
+
 ```json
 {
   "type": "session_closed",
@@ -223,12 +238,12 @@ Give the log panel something to show.
 }
 ```
 
----
+## 8. Offline Server Mock Pack
 
-## 8. Offline Server Mock Pack (Lobby / Advanced Recruit / Combat / Errors)
-Use these four files for full offline mode. Add a CLI switch such as `--offline data/mock_combat_log_advanced.json`.
+مجموعه فایل‌ها برای اجرای کامل حالت آفلاین (**Lobby** / **Advanced Recruit** / **Combat** / **Errors**). قابل استفاده با فلگ: `--offline data/mock_combat_log_advanced.json`.
 
 ### `data/mock_lobby_wait.json`
+
 ```json
 {
   "type": "server_message",
@@ -238,7 +253,9 @@ Use these four files for full offline mode. Add a CLI switch such as `--offline 
 ```
 
 ### `data/mock_recruit_state_advanced.json`
-Mid-game Recruit snapshot with Sylvanas vs Lich King, golden minion, empty shop slots, hero power states.
+
+اسنپ‌شات اواسط بازی: **Sylvanas** vs **Lich King**، مینیون‌های **Golden**، اسلات‌های خالی فروشگاه و وضعیت **Hero Power**.
+
 ```json
 {
   "match_id": "mock-adv-001",
@@ -370,7 +387,7 @@ Mid-game Recruit snapshot with Sylvanas vs Lich King, golden minion, empty shop 
       "flags": {
         "shop_frozen": true,
         "ready": true
-      },
+    },
       "board": [
         {
           "slot": 1,
@@ -396,7 +413,9 @@ Mid-game Recruit snapshot with Sylvanas vs Lich King, golden minion, empty shop 
 ```
 
 ### `data/mock_combat_log_advanced.json`
-Full-feature combat script: Divine Shield, Deathrattle, Summon, Reborn, combat end.
+
+اسکریپت نبرد کامل: **Divine Shield**, **Deathrattle**, **Summon**, **Reborn**, **Combat End**.
+
 ```json
 [
   {
@@ -437,6 +456,7 @@ Full-feature combat script: Divine Shield, Deathrattle, Summon, Reborn, combat e
 ```
 
 ### `data/mock_error_not_enough_coins.json`
+
 ```json
 {
   "type": "error",
@@ -448,6 +468,7 @@ Full-feature combat script: Divine Shield, Deathrattle, Summon, Reborn, combat e
 ```
 
 ### `data/mock_error_board_full.json`
+
 ```json
 {
   "type": "error",
@@ -458,11 +479,11 @@ Full-feature combat script: Divine Shield, Deathrattle, Summon, Reborn, combat e
 }
 ```
 
-> Seriously: add `--offline <path>` in `app.py` so anyone can feed these files straight into the UI.
-
----
+> **نکته:** برای تست در **UI**، سوییچ `--offline <path>` را در `app.py` اضافه کنید تا بتوانید این فایل‌ها را مستقیماً بارگذاری کنید.
 
 ## Usage Notes
-- Keep every file under `data/` with the same names—automated tests rely on them.  
-- Save as UTF‑8 (no BOM) and run a quick JSON-schema check before merging to avoid surprise parsing failures.
 
+- تمام فایل‌ها باید در مسیر `data/` با همین نام‌ها نگه داشته شوند—تست‌های خودکار به آنها وابسته‌اند.
+- فایل‌ها را به صورت **UTF‑8** (بدون **BOM**) ذخیره کنید و قبل از merge یک بررسی سریع **JSON-schema** انجام دهید تا از خطاهای parsing غیرمنتظره جلوگیری شود.
+
+> در صورت نیاز به اضافه کردن شمای **JSON Schema** دقیق (مانند `json-schema.org`) برای اعتبارسنجی خودکار این فایل‌ها، بفرمایید تا بخش `definitions` را نیز اضافه کنم.
