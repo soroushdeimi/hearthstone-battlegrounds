@@ -2,8 +2,6 @@
 
 این فایل شامل تمام **Payload**های **JSON** مورد نیاز برای شبیه‌سازی وضعیت‌های مختلف کلاینت (**Recruit**, **Combat**, **Errors**) و تست آفلاین می‌باشد.
 
----
-
 ## 1. `data/mock_state.json`
 
 **Snapshot کامل وضعیت Recruit**: شامل فروشگاه، برد، دست، تایمرها و فلگ‌ها.
@@ -53,8 +51,6 @@
 }
 ```
 
----
-
 ## 2. Recruit Phase Deltas (`state_delta_01.json`, `state_delta_02.json`)
 
 اعمال تغییرات سمت سرور بدون ریلود کامل (ساختار `events[]` مطابق با بک‌اند واقعی).
@@ -82,8 +78,6 @@
 
 > **نکته:** از همین ساختار برای عملیات `board_update`, `board_remove`, `freeze_state`, `hero_health`, `armor` و غیره استفاده می‌شود.
 
----
-
 ## 3. `combat_start.json`
 
 اولین پیلود نبرد (شامل بردهای نهایی، **Seed** تصادفی و مشخص کردن شروع‌کننده).
@@ -106,8 +100,6 @@
   }
 }
 ```
-
----
 
 ## 4. Combat Events (`combat_event_attack.json`, `combat_event_deathrattle.json`)
 
@@ -148,8 +140,6 @@
 
 > **نکته:** نیاز به ایونت دیگری دارید؟ یک `payload.kind` جدید بسازید (مثلاً `stat_change`) با داده‌هایی که انیمیشن شما نیاز دارد.
 
----
-
 ## 5. `combat_result.json`
 
 محاسبه دمیج هیرو و بازماندگان. نمایش صفحه نتیجه پس از لاگ کردن ایونت‌ها.
@@ -169,8 +159,6 @@
   "digest": "sha256:0f3a..."
 }
 ```
-
----
 
 ## 6. Discover & Choose-One
 
@@ -194,8 +182,17 @@
 
 ### `discover_choice.json` (فرمانی که کلاینت می‌فرستد)
 
+**نکته مهم:** این درخواست برای امنیت بیشتر به‌روزرسانی شد (استفاده از token به جای player_id).
+
 ```json
-{"cmd": "discover_choice", "player_id": "p1", "request_id": "uuid-456", "arguments": {"card_id": "BG_FRONT_013"}}
+{
+  "action": "DISCOVER_CHOICE",
+  "token": "user-uuid-1234",
+  "payload": {
+    "request_id": "uuid-456",
+    "card_id": "BG_FRONT_013"
+  }
+}
 ```
 
 ### `choose_one_resolve.json` (نتیجه انتخاب - مثال Sprightly Scarab)
@@ -214,8 +211,6 @@
   "request_id": "uuid-789"
 }
 ```
-
----
 
 ## 7. Error & Session Samples
 
@@ -242,8 +237,6 @@
   "match_id": "mock-001"
 }
 ```
-
----
 
 ## 8. Offline Server Mock Pack
 
@@ -394,7 +387,7 @@
       "flags": {
         "shop_frozen": true,
         "ready": true
-      },
+    },
       "board": [
         {
           "slot": 1,
@@ -488,13 +481,9 @@
 
 > **نکته:** برای تست در **UI**، سوییچ `--offline <path>` را در `app.py` اضافه کنید تا بتوانید این فایل‌ها را مستقیماً بارگذاری کنید.
 
----
-
 ## Usage Notes
 
 - تمام فایل‌ها باید در مسیر `data/` با همین نام‌ها نگه داشته شوند—تست‌های خودکار به آنها وابسته‌اند.
 - فایل‌ها را به صورت **UTF‑8** (بدون **BOM**) ذخیره کنید و قبل از merge یک بررسی سریع **JSON-schema** انجام دهید تا از خطاهای parsing غیرمنتظره جلوگیری شود.
-
----
 
 > در صورت نیاز به اضافه کردن شمای **JSON Schema** دقیق (مانند `json-schema.org`) برای اعتبارسنجی خودکار این فایل‌ها، بفرمایید تا بخش `definitions` را نیز اضافه کنم.
