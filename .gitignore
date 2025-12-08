@@ -1,3 +1,3 @@
 # Ignore specs documentation drafts
 docs/specs/
-
+.DS_Store
