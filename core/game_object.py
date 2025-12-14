@@ -1,5 +1,6 @@
 import pygame
 from pygame.math import Vector2
+from config import *
 
 class Game_object(pygame.sprite.Sprite):
 	def __init__(self, game, image, x_scale, y_scale, initial_x=0, initial_y=0):
@@ -44,7 +45,7 @@ class Game_object(pygame.sprite.Sprite):
 			serface.blit(self.image, (relative_pos[0], relative_pos[1]))
    
 	def is_inside_screen(self, pos):
-		return ((pos[0]<800) and (pos[1]<500)) and ((pos[0]+self.scale[0]>=0) and (pos[1]+self.scale[1]>=0))
+		return ((pos[0]<WIDTH) and (pos[1]<HEIGHT)) and ((pos[0]+self.scale[0]>=0) and (pos[1]+self.scale[1]>=0))
 		
 	def get_rect(self, extra=(0,0)):
 		return pygame.Rect(self.pos[0], self.pos[1], self.scale[0]+extra[0], self.scale[1]+extra[1])
