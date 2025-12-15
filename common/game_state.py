@@ -3,20 +3,25 @@ class GameState:
         self.board = []
         self.max_board = 7
 
+        # Buff دائمی برای کارت‌های خاص (card_id-based)
         self.global_card_buffs = {
             "BEETLE_TOKEN": {"attack": 0, "health": 0},
         }
 
         self.death_queue = []
 
-    #Board
+    #BOARD
 
     def add_to_board(self, minion, position=None):
         if len(self.board) >= self.max_board:
             print("Board is full, cannot summon:", minion.name)
             return False
 
-        self.board.append(minion)
+        if position is None or position >= len(self.board):
+            self.board.append(minion)
+        else:
+            self.board.insert(position, minion)
+
         print("Summoned on board:", minion)
         return True
 
@@ -25,27 +30,31 @@ class GameState:
             buff = self.global_card_buffs[minion.card_id]
             minion.buff(buff["attack"], buff["health"])
 
-    def summon_minion(self, card_id):
+    def summon_minion(self, card_id, position=None):
         from common.minion import (
             BeetleToken,
             SkeletonToken,
+            HandToken,
             BuzzingVermin,
             ForestRover,
             NestSwarmer,
             TurquoiseSkitterer,
             MonstrousMacaw,
             HarmlessBonehead,
+            HandlessForsaken,
         )
 
         mapping = {
             "BEETLE_TOKEN": BeetleToken,
             "SKELETON_TOKEN": SkeletonToken,
+            "HAND_TOKEN": HandToken,
             "BUZZING_VERMIN": BuzzingVermin,
             "FOREST_ROVER": ForestRover,
             "NEST_SWARMER": NestSwarmer,
             "TURQUOISE_SKITTERER": TurquoiseSkitterer,
             "MONSTROUS_MACAW": MonstrousMacaw,
             "HARMLESS_BONEHEAD": HarmlessBonehead,
+            "HANDLESS_FORSAKEN": HandlessForsaken,
         }
 
         if card_id not in mapping:
@@ -53,33 +62,73 @@ class GameState:
             return False
 
         minion = mapping[card_id]()
-        self.apply_global_buffs(minion)
-        return self.add_to_board(minion)
 
-    #Deathrattle trigger (Macaw)
+        # Battlecry فقط هنگام Play (فعلاً چون hand نداریم، اینجا اجرا می‌کنیم)
+        if "Battlecry" in minion.keywords:
+            minion.on_play(self)
+
+        # buffهای دائمی کارت-محور (مثل Beetle)
+        self.apply_global_buffs(minion)
+
+        return self.add_to_board(minion, position)
+
+    #  DEATHRATTLE TRIGGER (بدون مرگ) 
+
+    def trigger_deathrattle(self, minion):
+        if minion is None:
+            return False
+        if minion not in self.board:
+            return False
+        if "Deathrattle" not in minion.keywords:
+            return False
+
+        minion.on_deathrattle(self)
+        return True
 
     def trigger_leftmost_friendly_deathrattle(self, exclude_minion=None):
         for m in self.board:
-            if exclude_minion and m is exclude_minion:
+            if exclude_minion is not None and m is exclude_minion:
                 continue
             if "Deathrattle" in m.keywords and m.is_alive():
-                m.on_deathrattle(self)
-                return True
+                return self.trigger_deathrattle(m)
+        print("No valid left-most Deathrattle minion found.")
         return False
 
-    #Death processing
+    #DEATH PROCESSING
+
+    def queue_death(self, minion):
+        if minion in self.board and minion.dead and minion not in self.death_queue:
+            self.death_queue.append(minion)
+
+    def collect_deaths_left_to_right(self):
+        for m in self.board:
+            if m.dead:
+                self.queue_death(m)
 
     def process_deaths(self):
-        for m in self.board[:]:
-            if m.dead:
-                self.board.remove(m)
-                if "Deathrattle" in m.keywords:
-                    m.on_deathrattle(self)
+        self.collect_deaths_left_to_right()
 
-    def deal_damage_to_slot(self, idx, dmg):
-        if idx >= len(self.board):
+        while self.death_queue:
+            dying = self.death_queue.pop(0)
+
+            if dying not in self.board:
+                continue
+
+            # مثل بازی: اول حذف، بعد Deathrattle
+            self.board.remove(dying)
+
+            if "Deathrattle" in dying.keywords:
+                dying.on_deathrattle(self)
+
+            self.collect_deaths_left_to_right()
+
+    #TEST HELPERS
+
+    def deal_damage_to_slot(self, slot_index, damage):
+        if slot_index < 0 or slot_index >= len(self.board):
             return
-        self.board[idx].take_damage(dmg)
+        target = self.board[slot_index]
+        target.take_damage(damage)
         self.process_deaths()
 
     def debug_print_board(self):
@@ -87,3 +136,4 @@ class GameState:
         for i, m in enumerate(self.board):
             print(f"{i}: {m}")
         print("===================")
+

@@ -68,7 +68,20 @@ class SkeletonToken(Minion):
         )
 
 
-#BEASTS
+class HandToken(Minion):
+    def __init__(self):
+        super().__init__(
+            card_id="HAND_TOKEN",
+            name="Hand",
+            tier=1,
+            attack=2,
+            health=1,
+            tribe="Undead",
+            keywords={"Reborn"}
+        )
+
+
+#BEETLE BUILD
 
 class BuzzingVermin(Minion):
     def __init__(self):
@@ -83,10 +96,15 @@ class BuzzingVermin(Minion):
         )
 
     def on_deathrattle(self, game_state):
+        print("Buzzing Vermin deathrattle triggers, summoning a Beetle...")
         game_state.summon_minion("BEETLE_TOKEN")
 
 
 class ForestRover(Minion):
+    """
+    Battlecry: All Beetles in this game get +1/+1
+    Deathrattle: Summon a 1/1 Beetle
+    """
     def __init__(self):
         super().__init__(
             card_id="FOREST_ROVER",
@@ -103,10 +121,14 @@ class ForestRover(Minion):
         game_state.global_card_buffs["BEETLE_TOKEN"]["health"] += 1
 
     def on_deathrattle(self, game_state):
+        print("Forest Rover deathrattle triggers, summoning a Beetle...")
         game_state.summon_minion("BEETLE_TOKEN")
 
 
 class NestSwarmer(Minion):
+    """
+    Deathrattle: Summon three 1/1 Beetles.
+    """
     def __init__(self):
         super().__init__(
             card_id="NEST_SWARMER",
@@ -119,11 +141,15 @@ class NestSwarmer(Minion):
         )
 
     def on_deathrattle(self, game_state):
+        print("Nest Swarmer deathrattle triggers, summoning three Beetles...")
         for _ in range(3):
             game_state.summon_minion("BEETLE_TOKEN")
 
 
 class TurquoiseSkitterer(Minion):
+    """
+    Deathrattle: All Beetles in this game get +1/+2. Then summon a Beetle.
+    """
     def __init__(self):
         super().__init__(
             card_id="TURQUOISE_SKITTERER",
@@ -138,10 +164,14 @@ class TurquoiseSkitterer(Minion):
     def on_deathrattle(self, game_state):
         game_state.global_card_buffs["BEETLE_TOKEN"]["attack"] += 1
         game_state.global_card_buffs["BEETLE_TOKEN"]["health"] += 2
+        print("Turquoise Skitterer deathrattle triggers: Beetles +1/+2, then summon a Beetle...")
         game_state.summon_minion("BEETLE_TOKEN")
 
 
 class MonstrousMacaw(Minion):
+    """
+    After this attacks, trigger the Deathrattle of your left-most minion.
+    """
     def __init__(self):
         super().__init__(
             card_id="MONSTROUS_MACAW",
@@ -154,6 +184,7 @@ class MonstrousMacaw(Minion):
         )
 
     def after_attack(self, game_state):
+        print("Monstrous Macaw after_attack: triggering left-most friendly Deathrattle...")
         game_state.trigger_leftmost_friendly_deathrattle(exclude_minion=self)
 
 
@@ -178,3 +209,23 @@ class HarmlessBonehead(Minion):
         print("Harmless Bonehead died, summoning two Skeletons...")
         for _ in range(2):
             game_state.summon_minion("SKELETON_TOKEN")
+
+
+class HandlessForsaken(Minion):
+    """
+    Deathrattle: Summon a 2/1 Hand with Reborn.
+    """
+    def __init__(self):
+        super().__init__(
+            card_id="HANDLESS_FORSAKEN",
+            name="Handless Forsaken",
+            tier=2,
+            attack=3,
+            health=2,
+            tribe="Undead",
+            keywords={"Deathrattle"}
+        )
+
+    def on_deathrattle(self, game_state):
+        print("Handless Forsaken died, summoning a Hand (2/1) with Reborn...")
+        game_state.summon_minion("HAND_TOKEN")
