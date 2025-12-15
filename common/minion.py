@@ -133,6 +133,31 @@ class NestSwarmer(Minion):
             game_state.summon_minion("BEETLE_TOKEN")
 
 
+class TurquoiseSkitterer(Minion):
+    """
+    Deathrattle: All Beetles in this game get +1/+2. Then summon a Beetle.
+    """
+    def __init__(self):
+        super().__init__(
+            card_id="TURQUOISE_SKITTERER",
+            name="Turquoise Skitterer",
+            tier=3,
+            attack=3,
+            health=4,
+            tribe="Beast",
+            keywords={"Deathrattle"}
+        )
+
+    def on_deathrattle(self, game_state):
+        # Buff دائمی فقط برای Beetle
+        game_state.global_card_buffs["BEETLE_TOKEN"]["attack"] += 1
+        game_state.global_card_buffs["BEETLE_TOKEN"]["health"] += 2
+
+        print("Turquoise Skitterer died, buffing Beetles (+1/+2) and summoning a Beetle...")
+        game_state.summon_minion("BEETLE_TOKEN")
+
+
+
 
 
 

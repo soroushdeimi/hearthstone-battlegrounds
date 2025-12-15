@@ -1,4 +1,3 @@
-
 class GameState:
     def __init__(self):
         self.board = []
@@ -32,7 +31,13 @@ class GameState:
             minion.buff(buff["attack"], buff["health"])
 
     def summon_minion(self, card_id, position=None):
-        from common.minion import BeetleToken, BuzzingVermin, ForestRover, NestSwarmer
+        from common.minion import (
+            BeetleToken,
+            BuzzingVermin,
+            ForestRover,
+            NestSwarmer,
+            TurquoiseSkitterer,
+        )
 
         if card_id == "BEETLE_TOKEN":
             minion = BeetleToken()
@@ -42,15 +47,17 @@ class GameState:
             minion = ForestRover()
         elif card_id == "NEST_SWARMER":
             minion = NestSwarmer()
+        elif card_id == "TURQUOISE_SKITTERER":
+            minion = TurquoiseSkitterer()
         else:
             print("Unknown card_id:", card_id)
             return False
 
-        # Battlecry فقط هنگام Play (فعلاً برای تست، همینجا اجرا می‌کنیم)
+        # Battlecry فقط هنگام Play (فعلاً برای تست، اینجا اجرا می‌کنیم)
         if "Battlecry" in minion.keywords:
             minion.on_play(self)
 
-        # buffهای دائمی کارت-محور
+        # Buffهای دائمی کارت-محور
         self.apply_global_buffs(minion)
 
         return self.add_to_board(minion, position)
@@ -75,7 +82,7 @@ class GameState:
             if dying not in self.board:
                 continue
 
-            # طبق منطق بازی: اول از برد حذف میشه، بعد deathrattle اجرا میشه
+            # مثل بازی: اول حذف، بعد deathrattle
             self.board.remove(dying)
 
             if "Deathrattle" in dying.keywords:
@@ -98,6 +105,7 @@ class GameState:
         for i, m in enumerate(self.board):
             print(f"{i}: {m}")
         print("===================")
+
 
 
 
