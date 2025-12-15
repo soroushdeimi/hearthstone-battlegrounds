@@ -1,12 +1,5 @@
-# common/minion.py
 
 class Minion:
-    """
-    مدل پایه‌ی همه‌ی مینیون‌ها.
-    اینجا فقط دیتا + رفتارهای عمومی (HP, Damage, Keywords, ...) را نگه می‌داریم.
-    رفتارهای خاص هر کارت در subclass ها override می‌شود.
-    """
-
     def __init__(self, card_id, name, tier, attack, health, tribe=None, keywords=None):
         self.card_id = card_id
         self.name = name
@@ -15,28 +8,16 @@ class Minion:
         self.health = health
         self.tribe = tribe
 
-        # keywords را همیشه به set تبدیل می‌کنیم تا:
-        # - چک کردن سریع باشد
-        # - تکراری نشود
         self.keywords = set(keywords) if keywords else set()
-
         self.is_golden = False
         self.dead = False
 
     def is_alive(self):
         return self.health > 0 and not self.dead
 
-    def has_keyword(self, keyword: str) -> bool:
-        return keyword in self.keywords
-
-    def take_damage(self, damage: int):
-        """
-        HP را کم می‌کند و اگر HP <= 0 شد dead=True می‌کند.
-        توجه: اینجا Deathrattle اجرا نمی‌کنیم؛ اجرای مرگ و deathrattle کار GameState است.
-        """
+    def take_damage(self, damage):
         if self.dead:
-            return True  # اگر قبلاً مرده بود
-
+            return True
         self.health -= damage
         if self.health <= 0:
             self.dead = True
@@ -52,7 +33,7 @@ class Minion:
     def remove_keyword(self, keyword):
         self.keywords.discard(keyword)
 
-    # ---- Hooks: در subclass ها override می‌شوند ----
+    # hooks
     def on_play(self, game_state):
         pass
 
@@ -72,7 +53,7 @@ class Minion:
         return f"<Minion {self.name} {self.attack}/{self.health} keywords={self.keywords}>"
 
 
-# ---------------- Token Minions ----------------
+#TOKENS
 
 class BeetleToken(Minion):
     def __init__(self):
@@ -87,12 +68,9 @@ class BeetleToken(Minion):
         )
 
 
-# ---------------- Main Minions ----------------
+#BEASTS
 
 class BuzzingVermin(Minion):
-    """
-    Taunt + Deathrattle: summon a 1/1 Beetle
-    """
     def __init__(self):
         super().__init__(
             card_id="BUZZING_VERMIN",
@@ -107,6 +85,36 @@ class BuzzingVermin(Minion):
     def on_deathrattle(self, game_state):
         print("Buzzing Vermin died, summoning a Beetle...")
         game_state.summon_minion("BEETLE_TOKEN")
+
+
+class ForestRover(Minion):
+    """
+    Battlecry: All Beetles in this game get +1/+1
+    Deathrattle: Summon a 1/1 Beetle
+    """
+
+    def __init__(self):
+        super().__init__(
+            card_id="FOREST_ROVER",
+            name="Forest Rover",
+            tier=2,
+            attack=3,
+            health=3,
+            tribe="Beast",
+            keywords={"Battlecry", "Deathrattle"}
+        )
+
+    def on_play(self, game_state):
+        # فقط Beetle ها (توکن) در کل بازی +1/+1 می‌گیرند
+        game_state.global_card_buffs["BEETLE_TOKEN"]["attack"] += 1
+        game_state.global_card_buffs["BEETLE_TOKEN"]["health"] += 1
+
+    def on_deathrattle(self, game_state):
+        print("Forest Rover died, summoning a Beetle...")
+        game_state.summon_minion("BEETLE_TOKEN")
+
+
+
 
 
 
