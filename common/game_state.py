@@ -1,10 +1,10 @@
+
 class GameState:
     def __init__(self):
         self.board = []
         self.max_board = 7
 
-        # Buff دائمی برای کارت‌های خاص (مثل Beetle)
-        # کلیدش card_id است، نه tribe
+        # Buff دائمی برای کارت‌های خاص (card_id-based)
         self.global_card_buffs = {
             "BEETLE_TOKEN": {"attack": 0, "health": 0},
         }
@@ -27,13 +27,12 @@ class GameState:
         return True
 
     def apply_global_buffs(self, minion):
-        # فقط اگر card_id این مینیون buff دائمی داشته باشد
         if minion.card_id in self.global_card_buffs:
             buff = self.global_card_buffs[minion.card_id]
             minion.buff(buff["attack"], buff["health"])
 
     def summon_minion(self, card_id, position=None):
-        from common.minion import BeetleToken, BuzzingVermin, ForestRover
+        from common.minion import BeetleToken, BuzzingVermin, ForestRover, NestSwarmer
 
         if card_id == "BEETLE_TOKEN":
             minion = BeetleToken()
@@ -41,15 +40,17 @@ class GameState:
             minion = BuzzingVermin()
         elif card_id == "FOREST_ROVER":
             minion = ForestRover()
+        elif card_id == "NEST_SWARMER":
+            minion = NestSwarmer()
         else:
             print("Unknown card_id:", card_id)
             return False
 
-        # Battlecry فقط هنگام Play (فعلاً چون hand نداریم، در summon اجرا می‌کنیم)
+        # Battlecry فقط هنگام Play (فعلاً برای تست، همینجا اجرا می‌کنیم)
         if "Battlecry" in minion.keywords:
             minion.on_play(self)
 
-        # Buffهای دائمی کارت-محور قبل از رفتن روی برد اعمال می‌شود
+        # buffهای دائمی کارت-محور
         self.apply_global_buffs(minion)
 
         return self.add_to_board(minion, position)
@@ -74,10 +75,12 @@ class GameState:
             if dying not in self.board:
                 continue
 
+            # طبق منطق بازی: اول از برد حذف میشه، بعد deathrattle اجرا میشه
+            self.board.remove(dying)
+
             if "Deathrattle" in dying.keywords:
                 dying.on_deathrattle(self)
 
-            self.board.remove(dying)
             self.collect_deaths_left_to_right()
 
     #TEST HELPERS
@@ -95,6 +98,7 @@ class GameState:
         for i, m in enumerate(self.board):
             print(f"{i}: {m}")
         print("===================")
+
 
 
 

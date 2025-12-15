@@ -1,3 +1,4 @@
+
 class Minion:
     def __init__(self, card_id, name, tier, attack, health, tribe=None, keywords=None):
         self.card_id = card_id
@@ -67,7 +68,7 @@ class BeetleToken(Minion):
         )
 
 
-#BEASTS
+#BEETLE BUILD
 
 class BuzzingVermin(Minion):
     def __init__(self):
@@ -91,7 +92,6 @@ class ForestRover(Minion):
     Battlecry: All Beetles in this game get +1/+1
     Deathrattle: Summon a 1/1 Beetle
     """
-
     def __init__(self):
         super().__init__(
             card_id="FOREST_ROVER",
@@ -104,13 +104,34 @@ class ForestRover(Minion):
         )
 
     def on_play(self, game_state):
-        # فقط Beetle ها (توکن) در کل بازی +1/+1 می‌گیرند
         game_state.global_card_buffs["BEETLE_TOKEN"]["attack"] += 1
         game_state.global_card_buffs["BEETLE_TOKEN"]["health"] += 1
 
     def on_deathrattle(self, game_state):
         print("Forest Rover died, summoning a Beetle...")
         game_state.summon_minion("BEETLE_TOKEN")
+
+
+class NestSwarmer(Minion):
+    """
+    Deathrattle: Summon three 1/1 Beetles.
+    """
+    def __init__(self):
+        super().__init__(
+            card_id="NEST_SWARMER",
+            name="Nest Swarmer",
+            tier=2,
+            attack=2,
+            health=2,
+            tribe="Beast",
+            keywords={"Deathrattle"}
+        )
+
+    def on_deathrattle(self, game_state):
+        print("Nest Swarmer died, summoning three Beetles...")
+        for _ in range(3):
+            game_state.summon_minion("BEETLE_TOKEN")
+
 
 
 
