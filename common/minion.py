@@ -6,8 +6,8 @@ class Minion:
         self.attack = attack
         self.health = health
         self.tribe = tribe
-
         self.keywords = set(keywords) if keywords else set()
+
         self.is_golden = False
         self.dead = False
 
@@ -101,10 +101,6 @@ class BuzzingVermin(Minion):
 
 
 class ForestRover(Minion):
-    """
-    Battlecry: All Beetles in this game get +1/+1
-    Deathrattle: Summon a 1/1 Beetle
-    """
     def __init__(self):
         super().__init__(
             card_id="FOREST_ROVER",
@@ -126,9 +122,6 @@ class ForestRover(Minion):
 
 
 class NestSwarmer(Minion):
-    """
-    Deathrattle: Summon three 1/1 Beetles.
-    """
     def __init__(self):
         super().__init__(
             card_id="NEST_SWARMER",
@@ -147,9 +140,6 @@ class NestSwarmer(Minion):
 
 
 class TurquoiseSkitterer(Minion):
-    """
-    Deathrattle: All Beetles in this game get +1/+2. Then summon a Beetle.
-    """
     def __init__(self):
         super().__init__(
             card_id="TURQUOISE_SKITTERER",
@@ -169,9 +159,6 @@ class TurquoiseSkitterer(Minion):
 
 
 class MonstrousMacaw(Minion):
-    """
-    After this attacks, trigger the Deathrattle of your left-most minion.
-    """
     def __init__(self):
         super().__init__(
             card_id="MONSTROUS_MACAW",
@@ -191,9 +178,6 @@ class MonstrousMacaw(Minion):
 #UNDEAD
 
 class HarmlessBonehead(Minion):
-    """
-    Deathrattle: Summon two 1/1 Skeletons
-    """
     def __init__(self):
         super().__init__(
             card_id="HARMLESS_BONEHEAD",
@@ -212,9 +196,6 @@ class HarmlessBonehead(Minion):
 
 
 class HandlessForsaken(Minion):
-    """
-    Deathrattle: Summon a 2/1 Hand with Reborn.
-    """
     def __init__(self):
         super().__init__(
             card_id="HANDLESS_FORSAKEN",
@@ -229,3 +210,31 @@ class HandlessForsaken(Minion):
     def on_deathrattle(self, game_state):
         print("Handless Forsaken died, summoning a Hand (2/1) with Reborn...")
         game_state.summon_minion("HAND_TOKEN")
+
+
+class NerubianDeathswarmer(Minion):
+    """
+    Battlecry: All your Undead in this game get +1 Attack.
+    """
+    def __init__(self):
+        super().__init__(
+            card_id="NERUBIAN_DEATHSWARMER",
+            name="Nerubian Deathswarmer",
+            tier=2,
+            attack=2,
+            health=3,
+            tribe="Undead",
+            keywords={"Battlecry"}
+        )
+
+    def on_play(self, game_state):
+        # 1) ثبت buff دائمی برای Undeadهای آینده
+        game_state.global_tribe_buffs["Undead"]["attack"] += 1
+
+        # 2) اعمال فوری روی Undeadهای فعلی روی برد
+        for m in game_state.board:
+            if m.tribe == "Undead" and m.is_alive():
+                m.buff(attack=1, health=0)
+
+        print("Nerubian Deathswarmer battlecry: all Undead get +1 Attack (permanent).")
+

@@ -3,9 +3,16 @@ class GameState:
         self.board = []
         self.max_board = 7
 
-        # Buff دائمی برای کارت‌های خاص (card_id-based)
+        # Buff دائمی مخصوص کارت خاص (مثل Beetle)
         self.global_card_buffs = {
             "BEETLE_TOKEN": {"attack": 0, "health": 0},
+        }
+
+        # Buff دائمی مخصوص Tribe (مثل Undead)
+        self.global_tribe_buffs = {
+            "Undead": {"attack": 0, "health": 0},
+            "Beast": {"attack": 0, "health": 0},
+            "Demon": {"attack": 0, "health": 0},
         }
 
         self.death_queue = []
@@ -26,35 +33,37 @@ class GameState:
         return True
 
     def apply_global_buffs(self, minion):
+        # 1) کارت-محور
         if minion.card_id in self.global_card_buffs:
             buff = self.global_card_buffs[minion.card_id]
             minion.buff(buff["attack"], buff["health"])
 
+        # 2) تریبی (Tribe-محور)
+        if minion.tribe in self.global_tribe_buffs:
+            tb = self.global_tribe_buffs[minion.tribe]
+            minion.buff(tb["attack"], tb["health"])
+
     def summon_minion(self, card_id, position=None):
         from common.minion import (
-            BeetleToken,
-            SkeletonToken,
-            HandToken,
-            BuzzingVermin,
-            ForestRover,
-            NestSwarmer,
-            TurquoiseSkitterer,
-            MonstrousMacaw,
-            HarmlessBonehead,
-            HandlessForsaken,
+            BeetleToken, SkeletonToken, HandToken,
+            BuzzingVermin, ForestRover, NestSwarmer, TurquoiseSkitterer, MonstrousMacaw,
+            HarmlessBonehead, HandlessForsaken, NerubianDeathswarmer
         )
 
         mapping = {
             "BEETLE_TOKEN": BeetleToken,
             "SKELETON_TOKEN": SkeletonToken,
             "HAND_TOKEN": HandToken,
+
             "BUZZING_VERMIN": BuzzingVermin,
             "FOREST_ROVER": ForestRover,
             "NEST_SWARMER": NestSwarmer,
             "TURQUOISE_SKITTERER": TurquoiseSkitterer,
             "MONSTROUS_MACAW": MonstrousMacaw,
+
             "HARMLESS_BONEHEAD": HarmlessBonehead,
             "HANDLESS_FORSAKEN": HandlessForsaken,
+            "NERUBIAN_DEATHSWARMER": NerubianDeathswarmer,
         }
 
         if card_id not in mapping:
@@ -67,7 +76,7 @@ class GameState:
         if "Battlecry" in minion.keywords:
             minion.on_play(self)
 
-        # buffهای دائمی کارت-محور (مثل Beetle)
+        # اعمال buffهای دائمی (کارت-محور و تریبی)
         self.apply_global_buffs(minion)
 
         return self.add_to_board(minion, position)
@@ -136,4 +145,5 @@ class GameState:
         for i, m in enumerate(self.board):
             print(f"{i}: {m}")
         print("===================")
+
 
