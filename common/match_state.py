@@ -7,6 +7,16 @@ class MatchState:
 
     def add_player(self, player_id, hero):
         player = PlayerState(player_id, hero)
+
+        # Passive effects هنگام اضافه شدن بازیکن اعمال می‌شوند
+        if hero.hero_id == "MILLHOUSE":
+            # Millhouse Passive طبق داک:
+            # Minions cost 2, Refresh cost 2, Tavern upgrades +1 cost, Start with 3 gold
+            player.minion_buy_cost = 2
+            player.refresh_cost = 2
+            player.tavern_upgrade_extra_cost = 1
+            player.gold = 3  # همچنان 3 است، فقط تاکید
+
         self.players[player_id] = player
 
         if self.current_player_id is None:
@@ -32,12 +42,10 @@ class MatchState:
         self.current_player_id = player_id
 
     def spend_gold(self, player_id, amount):
-        """
-        کم کردن طلا اگر کافی باشد.
-        """
         player = self.get_player(player_id)
         if player.gold < amount:
             return False
         player.gold -= amount
         return True
+
 
