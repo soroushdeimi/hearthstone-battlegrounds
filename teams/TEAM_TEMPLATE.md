@@ -4,7 +4,7 @@ This file contain's a summary profile of our team "NULL". This team was created 
 
 ## Basic Info
 
-- Team name:
+- Team name:NULL
 - Branch name: `team/NULL`
 - Members:
   - AmirMohammad KHakbaz  — 610300045
@@ -14,7 +14,7 @@ This file contain's a summary profile of our team "NULL". This team was created 
 ## Notes (Optional)
 
 - Each member's domain:
-  - AmirMohammad Khakbaz  : N.A
+  - AmirMohammad Khakbaz  :https://github.com/AMKhakbaz
   - Reza Fayazi           : https://github.com/Reter0
   - Seyed Hadi Mousavi    : https://github.com/saayedh
 
