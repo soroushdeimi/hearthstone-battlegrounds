@@ -1,29 +1,32 @@
 # Team Info Form
 
-Copy this file and save it in this folder with your team name. Example: `teams/phoenix.md`
+This file contain's a summary profile of our team "NULL". This team was created 12/02/2025 at 18:57 PM. 
 
 ## Basic Info
 
-- Team name:
-- Branch name: `team/<team-name>`
+- Team name:NULL
+- Branch name: `team/NULL`
 - Members:
-  - Member 1 — Student ID
-  - Member 2 — Student ID
-  - Member 3 — Student ID
+  - AmirMohammad KHakbaz  — 610300045
+  - Reza Fayazi           — 440299102
+  - Seyed Hadi Mousavi    — 610302105
 
 ## Notes (Optional)
 
 - Each member's domain:
-  - Member 1:
-  - Member 2:
-  - Member 3:
+  - AmirMohammad Khakbaz  :https://github.com/AMKhakbaz
+  - Reza Fayazi           : https://github.com/Reter0
+  - Seyed Hadi Mousavi    : https://github.com/saayedh
 
 ## Important PR Links (Optional)
 
+
+{To be Added in the proceeding Phases}
 - (Add your PR links here)
 
 ## Progress (Optional)
 
+- [*] Team SetUp
 - [ ] Initial design
 - [ ] Core implementation
 - [ ] Tests
