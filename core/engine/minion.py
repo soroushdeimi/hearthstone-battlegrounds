@@ -1,4 +1,6 @@
-class Minions:
+import pygame
+import minion
+class Minion:
     def __init__(self, name,  attack , health , tier):
         self.name = name
         self.attack = attack
