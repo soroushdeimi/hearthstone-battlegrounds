@@ -17,11 +17,15 @@ class Player:
            return self.board.pop(n)
         return None
     def take_damage(self , amount):
-            self.hp -= amount
+        self.hp -= amount
+        """if(self.hp > 0):
+            return True
+        else:
+            return False"""
     def rest_gold(self):
         self.gold = 0
     def roll_shop(self, tavern):
-        pass
+        self.shop = tavern.roll(self.tavern_tier)
     def buy(self ,shop_index):
         pass
     def upgrade_tier(self):
