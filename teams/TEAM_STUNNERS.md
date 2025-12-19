@@ -4,19 +4,19 @@ Copy this file and save it in this folder with your team name. Example: `teams/p
 
 ## Basic Info
 
-- Team name:
-- Branch name: `team/<team-name>`
+- Team name: Stunners
+- Branch name: `team/stunners`
 - Members:
-  - Member 1 — Student ID
-  - Member 2 — Student ID
-  - Member 3 — Student ID
+  - Sedigheh Ghorbani — 610303180
+  - Rozhan Ghasabtabar — 610303181
+  - Tara Sobouti — 610303124
 
 ## Notes (Optional)
 
 - Each member's domain:
-  - Member 1:
-  - Member 2:
-  - Member 3:
+  - Sedigheh Ghorbani:
+  - Rozhan Ghasabtabar:
+  - Tara Sobouti:
 
 ## Important PR Links (Optional)
 
