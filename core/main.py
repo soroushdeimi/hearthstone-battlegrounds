@@ -2,6 +2,7 @@ import pygame
 import sys
 from engine.minion import Minion
 from engine.player import Player
+from engine.taveren import Tavern
 
 class GameController:
     def __init__(self):
@@ -13,6 +14,7 @@ class GameController:
         self.font = pygame.font.SysFont("Arial", 20)
         self.clock = pygame.time.Clock()
         self.is_running = True
+        self.tavern = Tavern(shop_size = 4)
 
         self.state = "MENU"
         self.player1 = None
@@ -24,7 +26,8 @@ class GameController:
         self.state = "PLAYING"
 
 
-        self.player1 = Player("Mani")
+        self.player1.tier = 1
+        self.player1.board = []
         m1 = Minion("Murloc", 2 , 1 ,1)
         m2 = Minion("Dragon", 3 , 4 , 1)
         m3 = Minion("Dragon", 3 , 4 , 1)
@@ -68,6 +71,11 @@ class GameController:
                     player_ui_rect = pygame.Rect(20,20,200,30)
                     if player_ui_rect.collidepoint(mouse_pos):
                         self.player1.take_damage(2)
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        new_minions = self.tavern.roll(self.player1.tier)
+                        self.player1.board = new_minions
+                        print(f"Rolled {len(new_minions)} new minions from Tavern!")
 
                         print(f"Player HP reduced to : {self.player1.hp}")
                 if self.player1.hp <= 0 :
@@ -109,6 +117,19 @@ class GameController:
                 self.screen.blit(name_text, (x_pos + 5, y_pos + 5))
                 stats_text = self.font.render(f"{minion.attack} / {minion.health}", True, (0, 0, 0))
                 self.screen.blit(stats_text, (x_pos + 20, y_pos + 100))
+                shop_lable = self.font.render("SHOP(Press space)", True, (255,215,0))
+                self.screen.blit(shop_lable, (50,60))
+
+            for i , minion in enumerate(self.player1.shop):
+                x_pos = 50 + (i * 120)
+                y_pos = 100
+
+                pygame.draw.rect(self.screen,(50,50,150), (x_pos, y_pos , 100, 140))
+                pygame.draw.rect(self.screen, (200,200,200),(x_pos, y_pos , 100 , 140), 2)
+                name_text = self.font.render(minion.name[:10], True, (255, 255, 255))
+                self.screen.blit(name_text, (x_pos + 5, y_pos + 5))
+                stats_text = self.font.render(f"{minion.attack} / {minion.health}", True, (255, 255, 255))
+                self.screen.blit(stats_text, (x_pos + 25, y_pos + 110))
 
 
 
