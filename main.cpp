@@ -1,12 +1,20 @@
-
-
-#include <iostream>
+#include<iostream>
 using namespace std;
+#include "GameState.h"
+#include "GameController.h"
 
-#include "minion.h"
 
-int main() {
-    Minion m("Alleycat", 1, 1, 1); //testCase that shows everything is ok now
-    m.play();
-    return 0;
+int main(){
+
+    // پسرک اینجا دارم حالت اولیه بازی رو پیاده میکنم از جمله بازیکن ها هیرو ها و فروشگاه ها
+    GameState state;
+
+
+    // اینجا کنترلر بازی رو ساختم
+    GameController controller;
+
+    controller.run(state);
+    
+
+
 }
