@@ -3,6 +3,8 @@
 
 #include "Hero.h"
 #include "Board.h"
+#include "MinionPool.h"
+#include<algorithm>
 #include<iostream>
 #include<string>
 #include <unordered_map> // این چیز باحالیه شبیه دیکشنری ها توی پایتون هست 
@@ -52,11 +54,15 @@ class Player{
                         ++it;
                     }
                 }
-    Minion* golden = new Minion(targetName + " (Golden)",
+        Minion* golden = new Minion(targetName + " (Golden)",
                             tier,
                             baseAttack * 2,
                             baseHealth * 2);
                 board.addMinion(golden);
+
+
+                int nextTier = tier+1;
+                discover(nextTier);
                 break;
                 
             }
@@ -64,6 +70,42 @@ class Player{
 
     }
 
+
+    void discover(int tier){
+
+        std::vector<Minion*> options = MinionPool::getByTier(tier);
+
+
+            if(options.empty()){
+                std::cout<<"No minions available for discover.\n";
+                return;
+            }
+
+            int numOptions = std::min(3,(int)options.size());
+            std::cout<<"Discover from Tier "<<tier<<":\n";
+            for(int i=0;i<numOptions;i++){
+                std::cout<<i<<") "<<options[i]->name<<" "<<options[i]->attack<<"/"<<options[i]->health<<std::endl;
+            }
+            std::cout<<"Enter your choice: ";
+            int choice;
+            std::cin>>choice;
+            if(choice<0||choice>=numOptions){
+
+                std::cout<<"Invalid choice, defaulting to 0\n";
+                choice =0;
+            }
+
+
+            // اینجا دارم مینیون انتخاب شده رو به برد بازی اضافه میکنم
+            Minion *chosen =options[choice];
+            board.addMinion(chosen);
+
+            for(int i=0;i<options.size();i++){
+                if(i != choice){
+                    delete options[i];
+                }
+            }
+    }
 
 };
 
