@@ -19,7 +19,9 @@ class MinionPool{
 
         if(tier>=1){
             result.push_back(new Minion("Alleycat", 1, 1, 1));
-            result.push_back(new Minion("Scallywag", 1, 2, 1));
+            Minion* scally = new Minion("Scallywag", 1, 2, 1);
+            scally->poisonous = true;      // اینجا مینیون زهر دار و سمی ایجاد کردم
+            result.push_back(scally);
         }
         if (tier >= 2) {
             Minion *golem = new Minion("Harvest Golem", 2, 2, 3); // برای مینیون گولم اومدم دف رتل نوشتم

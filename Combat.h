@@ -64,7 +64,14 @@ class Combat{
         else{
             attacker->health -= defender->attack;
         }
-    
+        // اینجا اومدم ویژگی سمی بودن رو اضافه کردم به بازی اگر مدافع یا مهاجم یکیشون سمی باشن و طرف مقابل ازین سپر های الهی نداشته باشن میمیرن
+            if(attacker->poisonous && !defender->divineShield){
+                defender->health=0;
+            }
+
+            if(defender->poisonous && !attacker->divineShield){
+                attacker->health=0;
+            }
     
     }
 

@@ -12,6 +12,7 @@ public:
     bool taunt;
     bool divineShield;
     bool deathrattle;
+    bool poisonous;
 
     Minion(string n, int t, int atk, int hp)
         : Card(n, t, CardType::Minion),
@@ -19,7 +20,8 @@ public:
           health(hp),
           taunt(false),
           divineShield(false),
-          deathrattle(false)
+          deathrattle(false),
+          poisonous(false)
     {}
 
     void play() override {
