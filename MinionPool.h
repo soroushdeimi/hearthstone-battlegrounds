@@ -21,8 +21,10 @@ class MinionPool{
             result.push_back(new Minion("Alleycat", 1, 1, 1));
             result.push_back(new Minion("Scallywag", 1, 2, 1));
         }
-                if (tier >= 2) {
-            result.push_back(new Minion("Harvest Golem", 2, 2, 3));
+        if (tier >= 2) {
+            Minion *golem = new Minion("Harvest Golem", 2, 2, 3); // برای مینیون گولم اومدم دف رتل نوشتم
+            golem->deathrattle = true;
+            result.push_back(golem);
         }
 
         if (tier >= 3) {
