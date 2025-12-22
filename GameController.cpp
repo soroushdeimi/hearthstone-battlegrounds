@@ -75,7 +75,7 @@ void GameController::buyPhase(Player &p, Shop &shop) {
         cout << "\nGold: " << p.gold
              << " | Time left: " << (TIMER - elapsed) << "s\n";
 
-        cout << "0=Buy 1=Roll 2=Toggle Freeze 3=Sell 4=Upgrade 9=End\n";
+        cout << "0=Buy 1=Roll 2=Toggle Freeze 3=Sell 4=Upgrade 5=Hero Power 9=End\n";
         cout << "Enter command: ";
 
         int cmd;
@@ -102,6 +102,67 @@ void GameController::buyPhase(Player &p, Shop &shop) {
         }
         else if (cmd == 4) {
             shop.upgrade(p);
+        }
+        else if(cmd == 5){
+            if(p.hero->name =="George"){
+                // اینجا دارم توانایی های هیرو ها رو ست میکنم 
+                // جرج قدرتش اینه سپر الهی بده
+                if(p.gold<2){
+                    cout<<"Not enough gold to use hero power\n";
+
+                }
+                else if(p.board.minions.empty()){
+                    cout<<"No minions on board\n";
+                }
+                else{
+                    cout<<"Select minion index to give Divine Shiled: ";
+                    int idx;
+                    cin>>idx;
+                    if(idx>=0 && idx<p.board.minions.size()){
+                        p.board.minions[idx]->divineShield = true;
+                        p.gold -= 2;
+                        cout<<"Divine Shiled grantd to "<<p.board.minions[idx]->name<<endl;
+
+                    }
+                    else{
+                        cout<<"invalid index\n";
+                    }
+                }
+
+            }
+            else if(p.hero->name == "Reno"){
+                // پسرک اینجا دارم قدرت رنو رو تعیین میکنم میتونه یه مینیون رو فقط یکبار طلایی کنه
+                if(p.heroPowerUsed){
+                    cout<<"Hero power already used\n";
+
+                }
+                else if(p.board.minions.empty()){
+                    cout<<"No minions on board\n";
+                }
+                else{
+                    cout<<"Select minion index to make Golden: ";
+                    int idx;
+                    cin >>idx;
+                    if(idx>=0 && idx<p.board.minions.size()){
+                        Minion *m = p.board.minions[idx];
+                        m->attack *=2;
+                        m->health *=2;
+                        m->name +=" (Golden)";
+                        p.heroPowerUsed =true;
+                        cout<<m->name<<" is now Golden!\n";
+                    }
+                    else{
+                        cout<<"Invalid index\n";
+                    }
+                }
+            }
+            else if(p.hero->name == "Millhouse"){
+                // این هیرو قدرت فعال ندارد
+                cout << "Millhouse has a passive power; no active hero power to use.\n";
+            }
+            else{// هیرو های دیگه که بعدا اضافه میکنیم
+        cout << "Hero power not implemented for " << p.hero->name << "\n";
+                }
         }
         else if (cmd == 9) {
             break;
