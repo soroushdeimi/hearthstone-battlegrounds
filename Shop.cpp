@@ -36,7 +36,17 @@ void Shop::show() {
 
 // خرید مینیون
 void Shop::buy(Player &p, int index) {
-    if (p.gold < BUY_COST) {
+
+    int cost = BUY_COST;
+    if(p.hero->name =="Millhouse"){ // اگر هیرو ما میلهاوز بود یه سکه ارزونتر باهاش تا میکنیم
+        cost = BUY_COST -1;
+        if(cost <1){
+            cost =1;
+        }
+    }
+
+
+    if (p.gold < cost) {
         cout << "Not enough gold\n";
         return;
     }
@@ -51,7 +61,7 @@ void Shop::buy(Player &p, int index) {
         return;
     }
 
-    p.gold -= BUY_COST;
+    p.gold -= cost;
     p.board.addMinion(slots[index]);
     slots.erase(slots.begin() + index);
 
@@ -95,6 +105,12 @@ void Shop::toggleFreeze(Player &p) {
 void Shop::upgrade(Player &p) {
     int cost = tavernTier + 4;
 
+    if(p.hero->name == "Millhouse"){// میلهاوس هزینه کمتری میده
+        cost -=2;
+        if(cost<1){
+            cost =1;
+        }
+    }
     if (tavernTier >= MAX_TIER) {
         cout << "Max Tier reached\n";
         return;

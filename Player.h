@@ -17,7 +17,9 @@ class Player{
     Board board;
     int gold;
 
-    Player(string n, Hero* h) : name(n), hero(h), gold(3){}
+    bool heroPowerUsed; // اینو اضافه کردم که بتونیم چک کنیم آیا هیرو قبلا از قدرتش استفاده کرده یا نه؟
+
+    Player(string n, Hero* h) : name(n), hero(h), gold(3) , heroPowerUsed(false){}
 
     void showBoard() {
         cout << name << "'s Board:" << endl;
