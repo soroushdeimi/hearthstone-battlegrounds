@@ -13,10 +13,9 @@ class Game:
         self.screen = pygame.display.set_mode((900, 600))
         self.clock = pygame.time.Clock()
         self.f = 60
-        self.r = True  # game is running
+        self.r = True 
 
-        self.hero_selected = None  # برای ذخیره هیرو انتخاب شده
-
+        self.hero_selected = None 
         self.screens["title"] = Title(self.screen, self.change_scr)
         self.screens["hero_select"] = HeroSelect(self.screen, self.change_scr)
 
