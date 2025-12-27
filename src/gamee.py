@@ -1,49 +1,58 @@
+
+
 import pygame
-from src.title_screen import Title
-from src.hero_select import HeroSelect  
-from src.gameplay import Gameplay
+
+from title_screen import Title
+from hero_select import HeroSelect  
+from gameplay import Gameplay
+from recruit_screen import RecruitScreen
 
 class Game:
     def __init__(self):
         pygame.init()
         pygame.font.init()
 
+        self.screen = pygame.display.set_mode((900, 600))
+        pygame.display.set_caption("Hearthstone Battlegrounds")
+        self.clock = pygame.time.Clock()
+        self.fps = 60
+        self.running = True
+
         self.screens = {}
         self.current_screen = None
-        self.screen = pygame.display.set_mode((900, 600))
-        self.clock = pygame.time.Clock()
-        self.f = 60
-        self.r = True  # game is running
 
-        self.hero_selected = None  # برای ذخیره هیرو انتخاب شده
+        self.screens["title"] = Title(self.screen, self.change_screen)
+        self.screens["hero_select"] = HeroSelect(self.screen, self.change_screen)
 
-        self.screens["title"] = Title(self.screen, self.change_scr)
-        self.screens["hero_select"] = HeroSelect(self.screen, self.change_scr)
+        self.change_screen("title")
 
-        self.change_scr("title")
+    def change_screen(self, name, **kwargs):
+        if name == "recruit" and "hero" in kwargs:
+            self.screens["recruit"] = RecruitScreen(
+                self.screen,
+                self.change_screen,
+                kwargs["hero"]
+            )
+
+        self.current_screen = self.screens.get(name)
 
     def run(self):
-        while self.r:
-            self.clock.tick(self.f)
+        while self.running:
+            self.clock.tick(self.fps)
             events = pygame.event.get()
             for event in events:
                 if event.type == pygame.QUIT:
-                    self.r = False
+                    self.running = False
 
-            if self.current_screen is not None:
+            if self.current_screen:
                 self.current_screen.handle_events(events)
                 self.current_screen.updates()
                 self.current_screen.render(self.screen)
-            else:
-                self.screen.fill((0, 0, 0))
 
             pygame.display.flip()
+
         pygame.quit()
 
-    def change_scr(self, name_scr, **kwargs):
-        
-        if name_scr == "gameplay" and "hero" in kwargs:
-            self.hero_selected = kwargs["hero"]
-            self.screens["gameplay"] = Gameplay(self.screen, self.change_scr, self.hero_selected)
-
-        self.current_screen = self.screens[name_scr]
+if __name__ == "__main__":
+    game = Game()
+    game.run()

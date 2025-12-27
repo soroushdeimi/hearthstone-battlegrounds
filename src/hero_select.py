@@ -1,5 +1,5 @@
 import pygame
-from src.button import Button
+from button import Button
 
 class HeroSelect:
     def __init__(self, screen, change_scr):
@@ -42,9 +42,10 @@ class HeroSelect:
 
     def confirm_selection(self):
         if self.selected_hero:
-            self.change_scr("gameplay", hero=self.selected_hero)
+           self.change_scr("recruit", hero=self.selected_hero)
         else:
-            print("No hero selected!")
+           print("No hero selected!")
+
 
 
     def handle_events(self, events):

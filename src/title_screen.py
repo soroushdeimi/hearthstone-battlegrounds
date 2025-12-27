@@ -1,5 +1,5 @@
 import pygame
-from src.button import Button
+from button import Button
 
 class Title:
     def __init__(self, screen, change_scr):
