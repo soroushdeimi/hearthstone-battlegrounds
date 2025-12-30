@@ -20,19 +20,34 @@ void GameController::run(GameState &state){// تابع اجرایی بسیار �
             Shop *s = state.shops[i];
 
 
-            cout<<"\n---"<<p->name<<"TURN --\n";
+            cout<<"\n---"<<p->name<<"TURN --(Health: "<<p->hero->health<<")\n";
             buyPhase(*p , *s);
 
 
         }
+            // چک دارم میگنم اگه فقط یه بازیکن مونده باشه بازی تموم باشه
+        if(state.players.size()<=1){
+            cout<<state.players[0]->name<<"is the last player standing! Game Over.\n";
+            break;
+        }
+
+
         // ------پسرک حتما توجه کن به اینجا
         //فاز Combat بازی
+
 
         state.phase = Phase::Combat;
         cout<<"\n----COMBAT PHASE ---\n";
         combatPhase(state);
 
         state.round++;
+
+            // نیازه دوباره چک کنم ببینم یه بازیکن اگر مونده بازی تمومه
+                if(state.players.size()<=1){
+            cout<<state.players[0]->name<<"is the last player standing! Game Over.\n";
+            break;
+        }
+
     }
 }
 
@@ -40,12 +55,71 @@ void GameController::run(GameState &state){// تابع اجرایی بسیار �
 
 void GameController::combatPhase(GameState &state){// نیاز به بررسی مجدد دارم  - پیاده سازی فاز مبارزه
 
-for(int i=0; i+1<state.players.size();i+=2){
+int i=0;
+while(i+1<state.players.size()){
     Player *A = state.players[i];
     Player *B = state.players[i+1];
 
+
     cout<<"\n"<<A->name<<" VS "<<B->name<<endl;
-    Combat::fight(*A ,*B);
+    Combat::fight(*A,*B);
+
+
+    //اینجا دارم بازنده و برنده رو مشخص میکنم
+    bool aHasMinions = (A->board.minions.size()>0);
+    bool bHasMinions = (B->board.minions.size()>0);
+    
+    if(aHasMinions && !bHasMinions){
+
+        int damage = state.shops[i]->tavernTier;
+        for(Minion *m :A->board.minions){
+            damage +=m->tier;
+        }
+
+        B->hero->health -= damage;
+        
+        cout << B->name << " takes " << damage << " damage! (Health: " << B->hero->health << ")\n";
+        if(B->hero->health<=0){
+            cout<<B->name<<"has been eliminated!\n";
+            state.players.erase(state.players.begin()+ (i+1));
+            state.shops.erase(state.shops.begin() + (i+1));
+
+        }
+        else{
+            i+=2;
+        }
+
+
+    }       
+     else if(bHasMinions && !aHasMinions){
+        int damage = state.shops[i+1]->tavernTier;
+        for(Minion *m : B->board.minions){
+            damage +=m->tier;
+        }
+        
+        A->hero->health -=damage;
+            cout << A->name << " takes " << damage << " damage! (Health: " << A->hero->health << ")\n";
+        if(A->hero->health<=0){
+            cout<<A->name<<" has been eliminated! \n";
+
+
+            state.players.erase(state.players.begin()+i);
+            state.shops.erase(state.shops.begin()+i);
+
+        }
+
+        else{
+            i+2;
+
+        }
+
+        }
+
+        else{
+            cout << "It's a draw. No damage dealt.\n";
+            i += 2;        
+        }
+
 }
 
 }
