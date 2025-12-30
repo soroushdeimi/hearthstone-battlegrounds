@@ -47,7 +47,7 @@ class Combat{
 
 
 
-    static void deaalDamage(Minion *attacker, Minion *defender){// بررسی و ضربه زدن به مینیون حریف با توجه به دارا بودن دیواین شیلد
+    static void dealDamage(Minion *attacker, Minion *defender){// بررسی و ضربه زدن به مینیون حریف با توجه به دارا بودن دیواین شیلد
         if (defender->divineShield){
             defender->divineShield = false;
 
@@ -169,7 +169,7 @@ static void fight(Player &A ,Player &B){
             cout << "[A] " << attacker->name << " attacks " << target->name << endl;  //مناسب برای لاگ گیری
 
 
-            deaalDamage(attacker , target);
+            dealDamage(attacker , target);
             handleDeaths(A.board);
             handleDeaths(B.board);
 
@@ -202,7 +202,7 @@ static void fight(Player &A ,Player &B){
 
                 cout << "[B] " << attacker->name << " attacks " << target->name << endl;
 
-                deaalDamage(attacker ,target);
+                dealDamage(attacker ,target);
                 handleDeaths(A.board);
                 handleDeaths(B.board);
 
