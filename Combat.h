@@ -27,23 +27,50 @@ class Combat{
     }
 
 
-    static Minion* chooseTarget(Board &board){// انتخاب هدف برای حمله با این تابع انجام میشود
 
-        vector<Minion*> taunts = getTaunts(board);
+    static Minion* chooseTarget(Board &board){
 
-        if(taunts.size()>0){
-            int r = rand() % taunts.size();
-            return taunts[r];       
+    vector<Minion*> taunts;
+
+    for (Minion* m : board.minions) {
+        if (m->taunt && m->health > 0) {
+            taunts.push_back(m);
         }
-
-
-        if(board.minions.size() ==0){
-            return nullptr;
-        }
-
-        int index = rand() % board.minions.size();
-        return board.minions[index];
     }
+
+    if (!taunts.empty()) {
+        return taunts[rand() % taunts.size()];
+    }
+
+    vector<Minion*> alive;
+    for (Minion* m : board.minions) {
+        if (m->health > 0)
+            alive.push_back(m);
+    }
+
+    if (alive.empty()) return nullptr;
+
+    return alive[rand() % alive.size()];
+}
+
+
+    // static Minion* chooseTarget(Board &board){// انتخاب هدف برای حمله با این تابع انجام میشود
+
+    //     vector<Minion*> taunts = getTaunts(board);
+
+    //     if(taunts.size()>0){
+    //         int r = rand() % taunts.size();
+    //         return taunts[r];       
+    //     }
+
+
+    //     if(board.minions.size() ==0){
+    //         return nullptr;
+    //     }
+
+    //     int index = rand() % board.minions.size();
+    //     return board.minions[index];
+    // }
 
 
 
@@ -111,16 +138,17 @@ std::vector<Minion*> alive;
 
             }
 
-            else{
-                alive.push_back(m);
-            }
+
 
         }
-        board.minions = alive;
+        else{
+                alive.push_back(m);
+            }
+ 
     }
 
-
-
+       board.minions = alive;
+}
 
 
 //     vector<Minion*> alive;
@@ -137,12 +165,12 @@ std::vector<Minion*> alive;
 //     }
 // board.minions = alive;
 
-}
+
 
 
 static void fight(Player &A ,Player &B){
 
-    srand(time(NULL));
+    // srand(time(NULL));
 
     cout<<"-=-=-= Combat Started! =-=-=-\n";
 
