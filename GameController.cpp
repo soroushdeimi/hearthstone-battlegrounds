@@ -2,7 +2,7 @@
 #include "Combat.h"
 #include <iostream>
 #include <chrono>
-
+#include<random>
 using namespace std;
 using namespace chrono;
 
@@ -60,10 +60,12 @@ while(i+1<state.players.size()){
     Player *A = state.players[i];
     Player *B = state.players[i+1];
 
-
+//برای فاز سرور ما بعدها seed را از سرور برمی‌داریم (در پیام combat_start)، ولی برای تست محلی فعلاً یک seed بر اساس زمان ایجاد می‌کنیم و آن را چاپ می‌کنیم تا هر زمان خواستیم یک seed خاص را جایگزین کنیم و replay بگیریم
     cout<<"\n"<<A->name<<" VS "<<B->name<<endl;
-    Combat::fight(*A,*B);
-
+    uint32_t seed = static_cast<uint32_t>(chrono::steady_clock::now().time_since_epoch().count() & 0xffffffff);
+    std::mt19937 rng(seed);
+    cout << "Combat seed: " << seed << endl;
+    Combat::fight(*A, *B, rng);
 
     //اینجا دارم بازنده و برنده رو مشخص میکنم
     bool aHasMinions = (A->board.minions.size()>0);
