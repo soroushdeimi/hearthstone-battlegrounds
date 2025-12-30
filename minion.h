@@ -15,7 +15,7 @@ public:
     bool poisonous; // ویژگی سمی و زهرآلود بودن رو اضافه کردم اینجا
     bool reborn;
     bool rebornUsed;
-
+    bool windfury;
 
 
     Minion(string n, int t, int atk, int hp)
@@ -27,7 +27,8 @@ public:
           deathrattle(false),
           poisonous(false),
           reborn(false),
-          rebornUsed(false)
+          rebornUsed(false),
+          windfury(false)
     {}
 
     void play() override {

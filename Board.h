@@ -18,7 +18,7 @@ class Board{
     void removeDead();
     Minion *getNextAttacker();
     void printBoard();
-    
+    void clear();
 
 };
 

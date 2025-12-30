@@ -59,4 +59,11 @@ void Board::printBoard(){
         cout << m->name << "(" << m->attack << "/" << m->health << ") ";
     }
     cout << endl;
+
+
+}
+
+
+void Board::clear(){
+    minions.clear();
 }

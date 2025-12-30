@@ -79,6 +79,11 @@ while(i+1<state.players.size()){
         B->hero->health -= damage;
         
         cout << B->name << " takes " << damage << " damage! (Health: " << B->hero->health << ")\n";
+           // اینجا دارم برد رو پاک میکنم
+            A->board.clear();
+            B->board.clear();
+
+
         if(B->hero->health<=0){
             cout<<B->name<<"has been eliminated!\n";
             state.players.erase(state.players.begin()+ (i+1));
@@ -99,6 +104,8 @@ while(i+1<state.players.size()){
         
         A->hero->health -=damage;
             cout << A->name << " takes " << damage << " damage! (Health: " << A->hero->health << ")\n";
+            A->board.clear();// بازم دارم برد پاک میکنم
+            B->board.clear();
         if(A->hero->health<=0){
             cout<<A->name<<" has been eliminated! \n";
 
@@ -117,6 +124,10 @@ while(i+1<state.players.size()){
 
         else{
             cout << "It's a draw. No damage dealt.\n";
+
+            // آخرین باری که برد پاک میکنم
+            A->board.clear();
+            B->board.clear();
             i += 2;        
         }
 
