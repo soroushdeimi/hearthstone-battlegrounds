@@ -156,12 +156,6 @@ while(i+1<state.players.size()){
 
 
 
-
-
-#include <thread> // اگر قبلاً نبود
-// ... سایر includes (Action.h هم لازم است)
-#include "Action.h"
-
 void GameController::buyPhase(GameState &state, int playerIndex) {
     Player &p = *state.players[playerIndex];
     Shop &shop = *state.shops[playerIndex];
