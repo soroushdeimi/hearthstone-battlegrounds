@@ -20,17 +20,17 @@ class MinionPool{
 
         if(tier>=1){
             result.push_back(new Minion("Alleycat", 1, 1, 1));
-            Minion* scally = new Minion("Scallywag", 1, 2, 1);
+            Minion* scally = new Minion("Scallywag", 1, 2, 2);
             // scally->poisonous = true;      // اینجا مینیون زهر دار و سمی ایجاد کردم
             result.push_back(scally);
             result.push_back(new Minion("Scavenger", 1, 1, 2));
             result.push_back(new Minion("Murloc Scout", 1, 1, 2));
             result.push_back(new Minion("Pterrordax Hatchling", 1, 2, 2));
-            result.push_back(new Minion("Righteous Squire", 1, 1, 3)); // تانک کوچک
-            result.push_back(new Minion("Rat", 1, 1, 1));
+            result.push_back(new Minion("Righteous Squire", 1, 2, 3)); // تانک کوچک
+            result.push_back(new Minion("Rat", 1, 1, 2));
             result.push_back(new Minion("Squirrel", 1, 1, 2));
             result.push_back(new Minion("Fledgling", 1, 2, 1));
-            result.push_back(new Minion("Wisp", 1, 1, 1));
+            result.push_back(new Minion("Wisp", 1, 1, 2));
         }
         if (tier >= 2) {
             Minion *golem = new Minion("Harvest Golem", 2, 2, 3); // برای مینیون گولم اومدم دف رتل نوشتم
