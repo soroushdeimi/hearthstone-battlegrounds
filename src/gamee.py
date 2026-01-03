@@ -25,6 +25,14 @@ class Game:
         self.screens["hero_select"] = HeroSelect(self.screen, self.change_screen)
 
         self.change_screen("title")
+        self.screen = pygame.display.set_mode((900, 600))
+        self.clock = pygame.time.Clock()
+        self.f = 60
+        self.r = True 
+
+        self.hero_selected = None 
+        self.screens["title"] = Title(self.screen, self.change_scr)
+        self.screens["hero_select"] = HeroSelect(self.screen, self.change_scr)
 
     def change_screen(self, name, **kwargs):
         if name == "recruit" and "hero" in kwargs:

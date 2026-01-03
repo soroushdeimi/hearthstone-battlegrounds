@@ -176,6 +176,7 @@ class Minion:
             pygame.draw.circle(surface, (100, 255, 100), (rect.left + 20, rect.top + 20), 12)
             rb_text = pygame.font.Font(None, 16).render("R", True, (0, 0, 0))
             surface.blit(rb_text, rb_text.get_rect(center=(rect.left + 20, rect.top + 20)))
+    
             
 
 
